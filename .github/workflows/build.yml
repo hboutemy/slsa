@@ -3,6 +3,10 @@ name: Manual Build
 on:
   workflow_dispatch:
 
+permissions:
+  id-token: write # for verifying identity in attestation process
+  attestations: write # to push attestation
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,3 +19,8 @@ jobs:
 
       - name: Fingerprint result
         run: sha256sum *.zip
+
+      - name: attest-build-provenance
+        uses: actions/attest-build-provenance@977bb373ede98d70efdf65b84cb5f73e068dcc2a # v3.0.0
+        with:
+          subject-path: '*.zip'
