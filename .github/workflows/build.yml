@@ -1,0 +1,17 @@
+name: Manual Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
+
+      - name: Do Build
+        run: zip build-output.zip *.md
+
+      - name: Fingerprint result
+        run: sha256sum *.zip
